@@ -27,12 +27,13 @@ async function run() {
     await client.connect();
 
     const brandsCollection = client.db('GadgetGeniusDB').collection('brands');
-    const productCollection = client.db('GadgetGeniusDB').collection('Products');
     app.get('/brands', async (req, res) => {
       const cursor = brandsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
   })
+    const productCollection = client.db('GadgetGeniusDB').collection('Products');
+    
   
 
 app.get('/products', async (req, res) => {
