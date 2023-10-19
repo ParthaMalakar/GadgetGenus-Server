@@ -56,10 +56,22 @@ app.get('/products/:id', async (req, res) => {
 
 app.post('/user', async (req, res) => {
   const user = req.body;
-  console.log(user);
+  console.log(user.MyCart);
   const result = await userCollection.insertOne(user);
   res.send(result);
 });
+
+app.put('/user', async (req, res) => {
+  const user = req.body;
+  const filter = { email: user.email }
+  const updateDoc = {
+      $set: {
+        MyCart: user.MyCart
+      }
+  }
+  const result = await userCollection.updateOne(filter, updateDoc);
+  res.send(result);
+})
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
