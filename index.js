@@ -82,10 +82,30 @@ app.get('/user/:email', async (req, res) => {
   res.send(result);
 })
 
-app.delete('/user/:id', async (req, res) => {
+app.delete('/products/:id', async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
-  const result = await userCollection.deleteOne(query);
+  const result = await productCollection.deleteOne(query);
+  res.send(result);
+})
+app.put('/products/:id', async (req, res) => {
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id) }
+  const options = { upsert: true };
+  const updatedProduct = req.body;
+
+  const coffee = {
+      $set: {
+        image:updatedProduct.image,
+        name:updatedProduct.name,       
+        brandName:updatedProduct.brandName,
+        type:updatedProduct.type,
+        price:updatedProduct.price,
+        rating:updatedProduct.rating
+      }
+  }
+
+  const result = await productCollection.updateOne(filter, coffee, options);
   res.send(result);
 })
     // Send a ping to confirm a successful connection
