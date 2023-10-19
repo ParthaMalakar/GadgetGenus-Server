@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app =express();
 const port = process.env.PORT || 5000
@@ -33,7 +33,7 @@ async function run() {
       res.send(result);
   })
     const productCollection = client.db('GadgetGeniusDB').collection('Products');
-    
+    const userCollection = client.db('GadgetGeniusDB').collection('user');
   
 
 app.get('/products', async (req, res) => {
@@ -53,6 +53,13 @@ app.get('/products/:id', async (req, res) => {
   const result = await productCollection.findOne(query);
   res.send(result);
 })
+
+app.post('/user', async (req, res) => {
+  const user = req.body;
+  console.log(user);
+  const result = await userCollection.insertOne(user);
+  res.send(result);
+});
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
