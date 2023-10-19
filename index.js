@@ -33,16 +33,17 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
   })
-  app.post('/addProduct', async (req, res) => {
-    const newProduct = req.body;
-    console.log(newProduct);
-    const result = await productCollection.insertOne(newProduct);
-    res.send(result);
-})
+  
 
 app.get('/products', async (req, res) => {
   const cursor = productCollection.find();
   const result = await cursor.toArray();
+  res.send(result);
+})
+app.post('/addProduct', async (req, res) => {
+  const newProduct = req.body;
+  console.log(newProduct);
+  const result = await productCollection.insertOne(newProduct);
   res.send(result);
 })
     // Send a ping to confirm a successful connection
